@@ -15,8 +15,8 @@ library(grid)
 requestURL <- "https://api.twitter.com/oauth/request_token"
 accessURL <- "https://api.twitter.com/oauth/access_token"
 authURL <- "https://api.twitter.com/oauth/authorize"
-consumerKey <- "RvoZZFd5aHDXNjIg2j9AYgSMS" # From dev.twitter.com
-consumerSecret <- "UPvR74cEOeNsI40Jjhv1T9zaMGcDmG37HJTYuBteZxDn3lKKOC" # From dev.twitter.com
+consumerKey <- " " # From dev.twitter.com
+consumerSecret <- " " # From dev.twitter.com
 
 my_oauth <- OAuthFactory$new(consumerKey = consumerKey,
                              consumerSecret = consumerSecret,
