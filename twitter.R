@@ -10,7 +10,7 @@ library(ROAuth)
 library(ggplot2)
 library(grid)
 
-# declare Twitter API Credentials & Create Handshake
+# declaring Twitter API Credentials & Create Handshake
 
 requestURL <- "https://api.twitter.com/oauth/request_token"
 accessURL <- "https://api.twitter.com/oauth/access_token"
@@ -26,7 +26,7 @@ my_oauth <- OAuthFactory$new(consumerKey = consumerKey,
 
 my_oauth$handshake(cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 
-# save the my_oauth data to an .Rdata file
+# saving the my_oauth data to an .Rdata file
 save(my_oauth, file = "my_oauth.Rdata")
 
 
@@ -39,9 +39,9 @@ filterStream(file.name = "tweets.json", # Save tweets in a json file
              timeout = 300,
              oauth = my_oauth) # OAuth credentials
 
-nin.df <- parseTweets("tweets.json", simplify = FALSE) #turning json file into dataframe
+nin.df <- parseTweets("tweets.json", simplify = FALSE)
 
-state_code <- function(x) x[2] #function to return state abbreviations
+state_code <- function(x) x[2]
 
 #splitting unfiltered tweets to plot bar graph
 
@@ -56,7 +56,7 @@ xbox_info1 <- nin.df[grep("Xbox", nin.df$text), ]
 tweets <- c(nrow(nin_info1),nrow(playSt_info1), nrow(xbox_info1))
 barplot(tweets, main="Tweets based on Keywords", xlab="Keywords", ylab="Tweet Count", 
         names.arg=c("Nintendo", "Playstation", "Xbox"),
-        border="red")
+         col = c("red", "purple", "green"), ylim=c(0,3100))
 
 
 #sorting dataframe by location 
@@ -87,6 +87,13 @@ nin_info <- nin.df[grep("Nintendo", nin.df$text), ]
 playSt_info <- nin.df[grep("Playstation", nin.df$text), ]
 
 xbox_info <- nin.df[grep("Xbox", nin.df$text), ]
+
+#making bar graph after sorting tweets
+
+tweets <- c(nrow(nin_info),nrow(playSt_info), nrow(xbox_info))
+barplot(tweets, main="Tweets based on Keywords", xlab="Keywords", ylab="Tweet Count", 
+        names.arg=c("Nintendo", "Playstation", "Xbox"),
+        col = c("red", "purple", "green"), ylim=c(0,10))
 
 
 #mapping 
@@ -119,7 +126,7 @@ points_xbx <- points_xbx[points_xbx$y > 25, ]
 nin_result = geom_point(data = points_nin,  aes(x = x, y = y), 
                         size = 1, alpha = 1, color = "red")
 
-playst_result = geom_point(data = points_plyst,  aes(x = x, y = y), 
+playst_result = geom_point(data = points_plyst,  aes(x = x, y = y, colour="TEST"), 
                            size = 1, alpha = 1, color = "purple")
 
 xbx_result = geom_point(data = points_xbx,  aes(x = x, y = y), 
@@ -127,4 +134,4 @@ xbx_result = geom_point(data = points_xbx,  aes(x = x, y = y),
 
 
 #plot map + points
-plot(m + nin_result + playst_result + xbx_result)
+plot(m + nin_result + playst_result + xbx_result) 
